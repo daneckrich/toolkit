@@ -1,0 +1,140 @@
+#main_content { display:none; }
+
+a {
+   outline: 0;
+}
+
+.bottom5 { margin-bottom:5px; }
+
+/* css for jquery tabs - min style */	
+
+
+	
+	#tabs-min ul.nav-pills { 
+		background: transparent; 
+		border: none; 
+		border-bottom: 1px solid #c0c0c0; 
+		-moz-border-radius: 0px; 
+		-webkit-border-radius: 0px; 
+		border-radius: 0px; 
+		margin-bottom:.5em
+	} 
+	
+	#tabs-min li.active { 
+		padding-bottom:.9em;
+		background: transparent url(/accel/apps/img/uiTabsArrow.png) no-repeat bottom center; 
+		border: none; 
+		margin-bottom:-1px;
+	} 
+	
+	#tabs-min li.active a { 
+		font-weight:bold;
+	}	
+	
+
+	.dt-nav, .stephelp {
+		cursor:pointer;
+	}
+
+	#ajax_loading {
+		display: none;
+		padding-left: 3em;
+		color: #428BCA;
+		font-weight: bold;
+	}
+	
+	#accordion a:hover { 
+		text-decoration:none; 		
+	}
+	
+	#accordion div.panel-heading:hover {
+		background-color:#eee;
+	}
+	
+	.table-striped > tbody > tr:nth-child(odd) {
+		background-color: #eee;
+	}
+	
+	table.display td { max-width: 400px; }
+	
+	table.rec_table  dt { font-weight:normal !important; }
+	table.rec_table dt:nth-child(n+1){ margin-top:1em; }
+	table.rec_table dd { margin-left: 1em; }
+	
+	table.rec_table td:first-child{
+		width:25%;	
+	}
+	
+	form .panel-heading { font-weight: bold; }
+	div.form-group label { font-weight: normal; }
+	
+	.form_section_help {
+		margin:5px 1em;
+		padding:1em;
+		border:1px solid #EFEFEF;
+		font-style:italic;				
+	}
+	
+	label.required:after {
+		content: " * required";
+		font-size:.8em;
+		color: red;
+		margin-left:5px;
+	}
+	
+	select.select_bars{
+		padding:0;
+	}
+	
+	select.select_bars option {
+		border-bottom: 1px solid #CCC;
+		padding:5px;
+	}
+	
+	.checkbox { margin-left: 1.2em; }
+	
+	.ms-select-all { white-space: nowrap; }
+	.ms-parent { min-width: 225px; }
+	
+	.rec_actions button { margin:0 1px 1px 0; }
+	
+	.dash-action-count {
+		position:absolute;
+		top: 0;
+		right: 0;
+		padding: 8px;
+	}
+
+/* DATATABLE ADJUSTMENTS FOR BETTER DISPLAY */
+	
+	table.dataTable thead > tr > th {
+	  padding-left: 8px;
+	  padding-right: 8px;
+	  white-space: nowrap;
+	}
+	
+	.datatable-scroll {
+		overflow-x: auto;
+		overflow-y: visible;
+	}
+	
+	
+table.dataTable thead .sorting_asc:after {
+    content: "";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting_desc:after {
+    content: "";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting:after {
+    content: "";
+    float: right;
+    font-family: fontawesome;
+    color: rgba(50,50,50,.5);
+}
+

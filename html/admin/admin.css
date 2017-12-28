@@ -1,0 +1,23 @@
+.dataTable td { cursor:pointer; }
+
+td div.input-group { 
+	width:90%; 
+	padding:0;
+}
+
+#modal-3 .modal-dialog  {
+	width:80%;
+	
+}
+
+#modal-33 .modal-content  {
+	height: 680px;
+}
+
+#modal-33 .modal-body  {
+	height: 600px;
+}
+
+a {
+   outline: 0;
+}
