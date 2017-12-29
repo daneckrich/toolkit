@@ -18,6 +18,10 @@ td div.input-group {
 	height: 600px;
 }
 
+.navbar-top-links li {
+    display: none;
+}
+
 a {
    outline: 0;
 }

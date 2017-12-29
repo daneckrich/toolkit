@@ -83,7 +83,8 @@ function openAction(objTbl){
 				var call = 'toggle_side';			
 			}
 			
-			var obj = { call_id: call, id: objTbl.data[0], update: val }			
+			var obj = { call_id: call, id: objTbl.data[0], update: val }	
+console.log(obj);			
 			ajaxPOST(ajaxURL,obj).done(function(json){
 				if(json.success == true){	
 					createAlert("success", "display updated");
@@ -291,7 +292,7 @@ function runAfterInit(dtid){
 		table.column( 1 ).data().each( function ( cell, idx ) {
 			 if(cell == "0"){
 				table
-					.cell(idx,4)
+					.cell(idx,5)
 					.nodes()
 					.to$()      // Convert to a jQuery object
 					.children().removeClass('fa-toggle-on').attr('title','hidden - click to display');

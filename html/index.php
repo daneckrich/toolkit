@@ -135,7 +135,6 @@ $pg->execute();
 
 <div id="main_content">
 	<br>
-	<?php echo "UID: " .$uid; ?>
 	<div id="tabs_page">
 		<div id="tabs_regular">
 			<ul class="nav nav-pills">

@@ -5,14 +5,6 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 	include_once "toolkit/config.inc.php";
 	include_once "ajax.inc.php";
 	
-	if(ADM == false){
-		$arData=array();
-		$arData['success']=false;
-		$arData['msg']="Error: you don't have permission to access this resource";
-		echo json_encode($arData);
-		exit();
-	}
-	
 	$call = checkRequest(ADM);
 	
 	/***************************************************************
@@ -202,19 +194,22 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 			$row_id = (int)$_POST['side_id'];
 			$content_body = $_POST['content_body'];
 			
-			$stmt = $dbc->dbconn->prepare("insert into rst_toolkit_content (side_id,content_body,content_active,uid) values (?,?,1,?)");
-			$stmt->bind_param("isi",$row_id,$content_body,$uid);
-			
+			$stmt = $dbc->prepare("insert into rst_toolkit_content (side_id,content_body,content_active,uid) values (?,?,1,?)");
+			$stmt->bindParam(1, $row_id, PDO::PARAM_INT);
+			$stmt->bindParam(2, $content_body, PDO::PARAM_STR);
+			$stmt->bindParam(3, $uid, PDO::PARAM_INT);
+						
 			$arResponse=runSTMT($dbc,$stmt);
 
 			if($arResponse['success']==true && $arResponse['rid']>0){
 				
-				$stmt = $dbc->dbconn->prepare("update rst_toolkit_content set content_active=0 where side_id=? and content_id != ?");
-				$stmt->bind_param("ii",$row_id,$arResponse['rid']);
+				$stmt = $dbc->prepare("update rst_toolkit_content set content_active=0 where side_id=? and content_id != ?");
+				$stmt->bindParam(1, $row_id, PDO::PARAM_INT);
+				$stmt->bindParam(2, $arResponse['rid'], PDO::PARAM_INT);
 				$arResponse['archive']=runSTMT($dbc,$stmt);
-			}
+			}			
 			
-			break;
+			break;			
 			
 		case "file_upload":  // upload the files and insert them into the db, proj_id will be set when the form is submitted
 		
@@ -227,7 +222,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 			$ext = $upload->getExtension(); // Get the extension of the uploaded file
 			$tkn = md5($upload->getFileName());
 			$upload->newFileName = $side_id.'_'.substr(uniqid('', true), -4).'_'.gmdate('YmdHis').'.'.$ext;
-			$result = $upload->handleUpload('/files/var/toolkitfiles/', $valid_extensions);
+			$result = $upload->handleUpload(FILEPATH, $valid_extensions);
 		
 			if ($result) {
 				$path = $upload->getSavedFile();
@@ -304,7 +299,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 			break;
 			
 		default: 
-			echo $arResponse = array('success' => false, 'msg' => 'ERROR: Post parameter'); 
+			$arResponse = array('success' => false, 'msg' => 'ERROR: Post parameter'); 
 			
 	}
 	

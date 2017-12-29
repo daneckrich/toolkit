@@ -3,7 +3,8 @@
 if(!$_REQUEST['fid'] || !is_numeric($_REQUEST['fid']) || !$_REQUEST['tkn']){
 	exit;
 }
-require_once 'getFile.class.php';
+require_once "toolkit/config.inc.php";
+require_once 'class/getFile.class.php';
 $flinfo = new getFile($_REQUEST['fid']);
 
 if($_REQUEST['tkn'] !== $flinfo->tkn){
@@ -11,10 +12,9 @@ if($_REQUEST['tkn'] !== $flinfo->tkn){
 	exit;
 }
 
-$path="/files/var/toolkitfiles/";
 $dl = substr(uniqid('', true), -8).'.'.$flinfo->ext;
+$fl=FILEPATH.$flinfo->name;
 
-$fl=$path.$flinfo->name;
 if(file_exists($fl)){
 	header('Content-Type: '.$flinfo->mime);
 	header('Content-Disposition: attachment; filename="'.$dl.'"');

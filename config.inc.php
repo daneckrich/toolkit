@@ -4,6 +4,7 @@ define("DB","toolkit");
 define("HOMEWEB","/toolkit/");
 define("TEMPLATE","toolkit/template/");
 define("SITENAME","Research Toolkit");
+define("FILEPATH","/files/var/toolkitfiles/");
 
 
 //************************************************************************
