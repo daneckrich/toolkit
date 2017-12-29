@@ -16,15 +16,11 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 	switch ($call){
 
 		case "update_content":
-			
-			$content_id = (int)$_POST['content_id'];
-			$row_id = (int)$_POST['row_id'];
-			$content_body = $_POST['content_body'];
-			
+		
 			$stmt = $dbc->prepare("insert into rst_toolkit_content (side_id,content_body,content_active,uid) values (?,?,1,?)");
-			$stmt->bindParam(1, $row_id, PDO::PARAM_INT);
-			$stmt->bindParam(2, $content_body, PDO::PARAM_STR);
-			$stmt->bindParam(3, $uid, PDO::PARAM_INT);
+			$stmt->bindParam(1, $_POST['row_id'], PDO::PARAM_INT);
+			$stmt->bindParam(2, $_POST['content_body'], PDO::PARAM_STR);
+			$stmt->bindParam(3, UID, PDO::PARAM_INT);
 						
 			$arResponse=runSTMT($dbc,$stmt);
 
@@ -36,7 +32,29 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 				$arResponse['archive']=runSTMT($dbc,$stmt);
 			}			
 			
-			break;			
+			break;
+
+		case "tk_search":
+		
+			$search = $dbc->quote($_POST['search_term']);
+		
+			$sql = sprintf("select tkt.tab_id,
+							tkt.tab_label,
+							tks.side_id,
+							tks.side_label,
+							tkc.content_id,
+							tkc.content_body
+							from rst_toolkit_tab tkt
+							join rst_toolkit_side tks on tkt.tab_id=tks.tab_id and tks.side_active=1
+							join rst_toolkit_content tkc on tks.side_id=tkc.side_id and tkc.content_active=1
+							where tkt.tab_active=1
+							and match (tkc.content_body) against (%s IN NATURAL LANGUAGE MODE)",$search);
+							
+			$sql = str_replace(array("\n","\r","\t")," ",$sql);
+							
+			$arResponse=runSQL($dbc,$sql);
+		
+			break;
 			
 		default: 
 			$arResponse = array('success' => false, 'msg' => 'ERROR: Post parameter'); 

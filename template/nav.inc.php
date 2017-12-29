@@ -25,15 +25,15 @@
 		<ul class="nav navbar-top-links navbar-right">
 				
 			<li>
-				<a href="#" title="search">			
-					<i class="fa fa-search-plus fa-fw"></i>		
+				<a href="#" title="search" id="open_search">			
+					<i class="fa fa-search-plus fa-2x"></i>		
 				</a>
 			</li> 
 			
 			<?php if(ADM === true): ?>			
 			<li>
 				<a href="admin" title="toolkit admin">
-					<i class="fa fa-cog fa-fw"></i>
+					<i class="fa fa-cog fa-2x"></i>
 				</a>						
 			</li> 
 			<?php endif; ?>

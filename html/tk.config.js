@@ -119,13 +119,52 @@ $(function() {
 		var url = $(this).attr('href');
 		window.open(url, '_blank');		
 	});
+	
+	$('#open_search').on('click',function(ev){
+		ev.preventDefault();
+		$('#tabs_page').slideToggle('slow');
+		$('#search_page').slideToggle('slow');
+	});
+	
+	$('#search_submit').on('click',function(){
+		
+		var srch = $('#search_value').val();
+		
+		if(!srch){
+			createAlert('error','Please enter a search term');
+		}
+		else{
+			
+			var args = { call_id:'tk_search', search_term:srch }
+			ajaxPOST(ajaxURL,args).done(function(json){
+				if(json.success == true){	
+					if(json.rows > 0){
+						var r = $('#search_results').empty();
+						$.each(json.data,function(idx,val){
+							r.append($('<div>').addClass('well well-sm')
+								.append($('<div>').html('<strong>' + val.tab_label + ' >> ' + val.side_label + '</strong>'))
+								.append($('<p>').html(val.content_body)));
+						});
+					}
+				}
+				else{
+					createAlert("error","There was a problem saving the content");
+				}
+			})
+			.fail(function(jqXHR, textStatus, errorThrown) {
+				createAlert("error","There was a problem saving the content");
+				console.log('ERROR: ' + JSON.stringify(jqXHR) + ' | ' + textStatus + ' | ' + errorThrown);
+			});		
+		
+		}
+	});
 
 	
 	$('a[data-toggle="tab"], div.well a[href^="#"]').on('click', function(e) {
 		console.log($(this).attr('href'));
 		history.pushState(null, null, $(this).attr('href'));
 	});
-  
+	
 	// navigate to a tab when the history changes
 	window.addEventListener("popstate", function(e) {
 		if(location.hash.length){

@@ -135,6 +135,22 @@ $pg->execute();
 
 <div id="main_content">
 	<br>
+	<div id="search_page" style="display:none;">
+		<div class="row">
+			<div class="col-sm-4 col-xs-12">
+				<div class="form-group input-group">
+					<input type="text" class="form-control" id="search_value" placeholder="enter search term">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" id="search_submit"><i class="fa fa-search"></i>
+						</button>
+					</span>					
+				</div>				
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12" id="search_results"></div>
+		</div>
+	</div>
 	<div id="tabs_page">
 		<div id="tabs_regular">
 			<ul class="nav nav-pills">
