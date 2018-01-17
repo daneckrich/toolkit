@@ -1,4 +1,7 @@
 #modal-1 .modal-dialog  {
-	width:80%;
-	
+	width:80%;	
+}
+
+a, a:active, a:focus {
+   outline: none;
 }

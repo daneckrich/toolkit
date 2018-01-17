@@ -1,4 +1,5 @@
 var ajaxURL = "tk.ajax.php";
+var searchURL = "search.ajax.php";
 
 function loadTab(i){}
 
@@ -77,7 +78,6 @@ $(function() {
 		var args = { call_id: 'update_content', content_id: cid, row_id: rid, content_body: body }
 		
 		ajaxPOST(ajaxURL,args).done(function(json){
-			console.log(JSON.stringify(json));
 			if(json.success == true){	
 				createAlert("success","Section Updated");
 				$('#rid_'+rid).html(body);
@@ -91,7 +91,6 @@ $(function() {
 		})
 		.fail(function(jqXHR, textStatus, errorThrown) {
 			createAlert("error","There was a problem saving the content");
-			console.log('ERROR: ' + JSON.stringify(jqXHR) + ' | ' + textStatus + ' | ' + errorThrown);
 		});		
 		
 		
@@ -126,7 +125,12 @@ $(function() {
 		$('#search_page').slideToggle('slow');
 	});
 	
-	$('#search_submit').on('click',function(){
+	$('#btn_close_search').on('click',function(){
+		$('#tabs_page').slideToggle('slow');
+		$('#search_page').slideToggle('slow');
+	});
+	
+	$('#btn_search_submit').on('click',function(){
 		
 		var srch = $('#search_value').val();
 		
@@ -136,24 +140,31 @@ $(function() {
 		else{
 			
 			var args = { call_id:'tk_search', search_term:srch }
-			ajaxPOST(ajaxURL,args).done(function(json){
+			ajaxPOST(searchURL,args).done(function(json){
 				if(json.success == true){	
 					if(json.rows > 0){
 						var r = $('#search_results').empty();
 						$.each(json.data,function(idx,val){
+						
+							var txt = '<a href="#" class="lnk_search" data-tab="' + val.tab_id + '" data-side="' + val.side_id + '" title="go to section">';
+							txt += '<i class="fa fa-external-link" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;';
+							txt += '<strong>' + val.tab_label + ' >> ' + val.side_label + '</strong>';
+							
 							r.append($('<div>').addClass('well well-sm')
-								.append($('<div>').html('<strong>' + val.tab_label + ' >> ' + val.side_label + '</strong>'))
+								.append($('<div>').html(txt))
 								.append($('<p>').html(val.content_body)));
 						});
 					}
+					else{
+						createAlert("warning","No matches found");
+					}
 				}
 				else{
-					createAlert("error","There was a problem saving the content");
+					createAlert("error","There was a problem searching the database");
 				}
 			})
 			.fail(function(jqXHR, textStatus, errorThrown) {
-				createAlert("error","There was a problem saving the content");
-				console.log('ERROR: ' + JSON.stringify(jqXHR) + ' | ' + textStatus + ' | ' + errorThrown);
+				createAlert("error","There was a problem searching the database");
 			});		
 		
 		}
@@ -161,7 +172,6 @@ $(function() {
 
 	
 	$('a[data-toggle="tab"], div.well a[href^="#"]').on('click', function(e) {
-		console.log($(this).attr('href'));
 		history.pushState(null, null, $(this).attr('href'));
 	});
 	
@@ -179,6 +189,25 @@ $(function() {
 		else {
 			$('.nav-pills a:first').tab('show');
 		}
+	});
+	
+	$('body').on('click','.lnk_search',function(ev){
+		
+		ev.preventDefault();
+		$('#tabs_page').slideToggle();
+		$('#search_page').slideToggle();
+
+		var tab = '#tabs-' + $(this).attr('data-tab');
+		var side = '#rid_' + $(this).attr('data-side');
+		
+		$('.nav-pills a[href="' + tab + '"]').tab('show');
+		$(side).closest('div.panel-collapse').collapse('show');
+		setTimeout(function(){
+			y = $(side).position().top - 50;
+			x = 0;
+			window.scrollTo(x, y); 
+		}, 500);	
+	
 	});
 	
 });

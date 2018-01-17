@@ -141,10 +141,12 @@ $pg->execute();
 				<div class="form-group input-group">
 					<input type="text" class="form-control" id="search_value" placeholder="enter search term">
 					<span class="input-group-btn">
-						<button class="btn btn-default" type="button" id="search_submit"><i class="fa fa-search"></i>
+						<button class="btn btn-default" type="button" id="btn_search_submit"><i class="fa fa-search"></i>
 						</button>
-					</span>					
-				</div>				
+						<button type="button" id="btn_close_search" class="btn btn-outline btn-default"><i class="fa fa-angle-double-up" aria-hidden="true"></i></button>
+					</span>									
+				</div>
+								
 			</div>
 		</div>
 		<div class="row">

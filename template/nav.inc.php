@@ -33,7 +33,7 @@
 			<?php if(ADM === true): ?>			
 			<li>
 				<a href="admin" title="toolkit admin">
-					<i class="fa fa-cog fa-2x"></i>
+					<i class="fa fa-cogs fa-2x"></i>
 				</a>						
 			</li> 
 			<?php endif; ?>
