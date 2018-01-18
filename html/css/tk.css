@@ -5,3 +5,8 @@
 a, a:active, a:focus {
    outline: none;
 }
+
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: lightblue;
+	border-bottom:0;
+}
