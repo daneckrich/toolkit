@@ -152,7 +152,7 @@ $(function() {
 							
 							r.append($('<div>').addClass('well well-sm')
 								.append($('<div>').html(txt))
-								.append($('<p>').html(val.content_body)));
+								.append($('<p>').html(val.content_body.stripSlashes())));
 						});
 					}
 					else{
